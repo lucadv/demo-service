@@ -1,0 +1,13 @@
+# webstorm
+.idea
+*.iml
+
+# eclipse
+.project
+.settings/
+
+# node/npm
+node_modules
+npm-debug.log
+/*.tgz
+/pkg
