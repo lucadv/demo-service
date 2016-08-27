@@ -1,0 +1,6 @@
+{
+  "rules": {
+    // some tests can be a bit verbose - allowing longer lines can help
+    "max-len": [1, 180]
+  }
+}

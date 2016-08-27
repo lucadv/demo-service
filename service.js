@@ -1,40 +1,41 @@
-var Hapi = require('hapi');
-var Hoek = require('hoek');
-var Async = require('async');
-var Config = require('./config');
+/*eslint no-console: "off"*/
+const Hapi = require('hapi');
+const Hoek = require('hoek');
+const Async = require('async');
+const Config = require('./config');
 
-var server = new Hapi.Server({});
+const server = new Hapi.Server({});
 
-Config.connections.forEach(function (connectionOptions) {
+Config.connections.forEach(connectionOptions => {
   server.connection(connectionOptions);
 });
 
-Async.forEachSeries(Config.plugins, function (plugin, next) {
+Async.forEachSeries(Config.plugins, (plugin, next) => {
   server.register({ register: require(plugin.name), options: plugin.options }, next);
-}, function (err) {
-  Hoek.assert(!err, 'Failed loading plugin : ' + err);
-  server.start(function () {
+}, err => {
+  Hoek.assert(!err, `Failed loading plugin : ${err}`);
+  server.start(() => {
     console.log('All servers started');
   });
 });
 
-var gracefulShutdown = function (callback) {
-  server.stop(function () {
+const gracefulShutdown = function (callback) {
+  server.stop(() => {
     console.log('All servers stopped');
     return callback();
   });
 };
 
-process.once('SIGINT', function () {
+process.once('SIGINT', () => {
   console.log('Received SIGINT');
-  gracefulShutdown(function () {
+  gracefulShutdown(() => {
     process.kill(process.pid, 'SIGINT');
   });
 });
 
-process.once('SIGUSR2', function () {
+process.once('SIGUSR2', () => {
   console.log('Received SIGUSR2');
-  gracefulShutdown(function () {
+  gracefulShutdown(() => {
     process.kill(process.pid, 'SIGUSR2');
   });
 });

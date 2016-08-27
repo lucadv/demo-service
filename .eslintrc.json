@@ -1,0 +1,63 @@
+{
+  "extends": "airbnb/base",
+  "env": {
+    "node": true
+  },
+  "rules": {
+    /*                                      */
+    /* relax airbnb rules for sequoia style */
+    /*                                      */
+    // anonymous functions without names are prolific - time consuming to fix
+    "func-names": [ "off" ],
+    // forces spaces at start/end of functions - not our style
+    "padded-blocks": [ "off" ],
+    // base requires comma dangle -- our existing code doesn't have it so disabling this
+    "comma-dangle": 0,
+    // variables in nested scope cant have same name - makes things hard with async and callbacks
+    "no-shadow": [ "off" ],
+    // sets maximum line length - for readability
+    "max-len": [1, 120],
+    // enforces putting all var statements at start of function scope - this is ugly and imho unnecessary
+    "vars-on-top": [ "off" ],
+    // prevents use of require except at the top of file - sometimes its just nicer
+    "global-require": [ "off" ],
+    // private vars having underscores as first char - we're ok with this
+    "no-underscore-dangle": [ "off" ],
+    // forces only constructors to have caps - our convention is to use caps for all requires
+    "new-cap": [ "off" ],
+    // forces base number to be passed to parseInt (this was more of an issue prior to ES5)
+    "radix": [ "off" ],
+    // forces function declaration before use - would require a lot of changes to comply
+    "no-use-before-define": [ "off" ],
+    // bit OTT - we don't want our code to be too verbose
+    "newline-per-chained-call": [ "off" ],
+    // bit OTT - block comments from IDE's dont always have spaces
+    "spaced-comment": [ "off" ],
+    // forces cloning function arguments - it could be hard to change this (some hapi params are mutated intentionally)
+    "no-param-reassign": [ "off" ],
+    // bit OTT - this forces all code branches to return
+    "consistent-return": [ "off" ],
+    // forces quotes to be used in obj literals only when needed
+    "quote-props": [ "error", "as-needed" ],
+    // do not enforce/disallow strict mode - airbnb disallows strict mode directives because babel inserts it for them
+    "strict": [ "off" ],
+
+    /*                                           */
+    /* tighten up airbnb rules for sequoia style */
+    /*                                           */
+    // disallow bitwise operators
+    "no-bitwise": [ "error" ],
+    // enforce camelCase variable and property naming (no underscores)
+    "camelcase": [ "error", { "properties": "always" } ],
+    // disallow empty block statements
+    "no-empty": [ "error" ],
+    // enforce consistent linebreak style.
+    "linebreak-style": [ "error", "unix" ],
+    // enforce dot notation over square bracket - unless dealing with underscored properties (if out of our control)
+    "dot-notation": [ "error", { "allowPattern": "^[a-z]+(_[a-z]+)+$" } ],
+    // enforces line breaks happen after the operator instead of before
+    "operator-linebreak": [ "error", "after" ],
+    // prevents use of unary word (e.g. typeof/void/new/delete) and operators (e.g ++/--) without surrounding spaces
+    "space-unary-ops": [ "error" ]
+  }
+}
