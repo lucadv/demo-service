@@ -6,6 +6,7 @@ const Config = require('./config');
 
 const server = new Hapi.Server({});
 
+//Adds incoming server connections
 Config.connections.forEach(connectionOptions => {
   server.connection(connectionOptions);
 });
